@@ -1,5 +1,3 @@
-package sk.axonpro.itms3.client.common.todelete;
-
 /**
  * @author genVlad
  * Algorithm by:  @see <a href="http://www.blackwasp.co.uk/NumberToWords.aspx">http://www.blackwasp.co.uk/NumberToWords.aspx</a>
