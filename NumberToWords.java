@@ -1,10 +1,15 @@
+package sk.axonpro.itms3.server.utils;
+
 /**
- * @author genVlad
+ * @author Vladimir Kubinda
  * Algorithm by:  @see <a href="http://www.blackwasp.co.uk/NumberToWords.aspx">http://www.blackwasp.co.uk/NumberToWords.aspx</a>
  */
 public class NumberToWords {
     public static void main(String[] args) {
-        System.out.println(numberToWords((12345678985225L)));
+        //System.out.println(numberToWords((12345678985225L)));
+        double number = 2.5;
+        System.out.println(amountToWords(number));
+        System.out.println(decimalNumberToWords(number));
     }
 
     // Single-digit and small number names
@@ -16,12 +21,85 @@ public class NumberToWords {
     // Scale number names for use during recombination
     private static String[] _scaleNumbers = new String[]{"", "tisíc", "milión", "miliarda"};
 
+    /**
+     * Converts an amount into Slovak words in eur
+     * @see <a href="https://jazykovaporadna.sme.sk/q/3743/">https://jazykovaporadna.sme.sk/q/3743/</a>
+     * @param number value to convert
+     * @return
+     */
     public static String amountToWords(double number) {
-        //TODO
-        return null;
+        String text = "";
+        long[] values = split(number);
+        if(values[0] >= 0) {
+            if(values[0] == 1) {
+                text += "jedno euro";
+            }
+            else if(values[0] >= 2) {
+                text += "dve eurá";
+            }
+            else if(values[0] == 3 || values[0] == 4) {
+                text += numberToWords(values[0]) + "eurá";
+            }
+            else {
+                text += numberToWords(values[0]) + " eur";
+            }
+        }
+        if(values[1] > 0) {
+            text += " a " + numberToWords(values[1]);
+            String suffix;
+            if(values[1] == 1) {
+                suffix = " cent";
+            }
+            else if(values[1] >= 2 && values[1] <= 4) {
+                suffix = " centy";
+            }
+            else {
+                suffix = " centov";
+            }
+            text += suffix;
+        }
+        return text;
     }
 
-    // Converts an integer value into English words
+    /**
+     * Converts an double value into Slovak words
+     * @see <a href="https://jazykovaporadna.sme.sk/q/704/">https://jazykovaporadna.sme.sk/q/704/</a>
+     * @param number value to convert
+     * @return
+     */
+    public static String decimalNumberToWords(double number) {
+        String text = "";
+        long[] values = split(number);
+        if(values[0] == 1) {
+            text += "jedna";
+        }
+        else if(values[0] >= 2) {
+            text += "dve";
+        }
+        else {
+            text += numberToWords(values[0]);
+        }
+        if(values[1] > 0) {
+            String decimalSeparator;
+            if(values[0] == 1) {
+                decimalSeparator = " celá ";
+            }
+            else if(values[0] >= 2 && values[0] <= 4) {
+                decimalSeparator = " celé ";
+            }
+            else {
+                decimalSeparator = " celých ";
+            }
+            text += decimalSeparator + numberToWords(values[1]);
+        }
+        return text;
+    }
+
+    /**
+     * Converts an long value into Slovak words
+     * @param number value to convert
+     * @return
+     */
     public static String numberToWords(long number) {
         // Ensure a positive number to extract from
         long positive = Math.abs(number);
@@ -107,7 +185,7 @@ public class NumberToWords {
         return combined;
     }
 
-    // Converts a three-digit group into English words
+    // Converts a three-digit group into Slovak words
     private static String threeDigitGroupToWords(long threeDigits) {
         // Initialise the return text
         String groupText = "";
@@ -149,5 +227,11 @@ public class NumberToWords {
         else {
             return (int)(Math.log10(number)+1);
         }
+    }
+
+    private static long[] split(double number) {
+        String doubleString = Double.toString(number);
+        String longStrings[]=doubleString.split("\\.");
+        return new long[]{Long.parseLong(longStrings[0]), Long.parseLong(longStrings[1])};
     }
 }
