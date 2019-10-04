@@ -1,5 +1,3 @@
-package sk.axonpro.itms3.server.utils;
-
 /**
  * @author Vladimir Kubinda
  * Algorithm by:  @see <a href="http://www.blackwasp.co.uk/NumberToWords.aspx">http://www.blackwasp.co.uk/NumberToWords.aspx</a>
