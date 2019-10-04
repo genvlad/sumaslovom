@@ -3,12 +3,6 @@
  * Algorithm by:  @see <a href="http://www.blackwasp.co.uk/NumberToWords.aspx">http://www.blackwasp.co.uk/NumberToWords.aspx</a>
  */
 public class NumberToWords {
-    public static void main(String[] args) {
-        //System.out.println(numberToWords((12345678985225L)));
-        double number = 2.5;
-        System.out.println(amountToWords(number));
-        System.out.println(decimalNumberToWords(number));
-    }
 
     // Single-digit and small number names
     private static String[] _smallNumbers = new String[]{"nula", "jedna", "dva", "tri", "štyri", "päť", "šesť", "sedem", "osem", "deväť", "desať", "jedenásť", "dvanásť", "trinásť", "štrnásť", "pätnásť", "šestnásť", "sedemnásť", "osemnásť", "devätnásť"};
